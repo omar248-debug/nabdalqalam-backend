@@ -56,11 +56,17 @@ router.post("/create-checkout-session", async (req, res) => {
     },
     line_items,
     mode: "payment",
-    success_url: `${process.env.CLIENT_URL}/checkout-success`,
+    success_url: `${process.env.CLIENT_URL}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.CLIENT_URL}/shopping-cart`,
   });
 
   res.send({ url: session.url });
+});
+
+router.get("/check-session", async (req, res) => {
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+
+  res.send(session);
 });
 
 module.exports = router;
