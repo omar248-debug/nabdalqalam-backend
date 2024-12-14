@@ -39,7 +39,7 @@ const books_edit = async (req, res) => {
     const updates = req.body;
 
     // If there's a new image, upload it
-    if (updates.img && updates.img.startsWith("https://res.cloudinary.com")) {
+    if (updates.img && updates.img.startsWith("data:image")) {
       const uploadedResponse = await cloudinary.uploader.upload(updates.img, {
         upload_preset: "nabdu_al_qalam",
       });
